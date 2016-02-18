@@ -1,6 +1,6 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
+# for examples test
 
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
@@ -220,7 +220,6 @@ export LD_LIBRARY_PATH=${CUDA_HOME}/lib64
 PATH=${CUDA_HOME}/bin:${PATH} 
 export PATH
 
-
 #  My terminal aliases for specifically for lagrange
 alias down='cd /hdd/Users/awesome/Downloads '
 alias tmp='cd /home/awesome/tmp '
@@ -241,6 +240,7 @@ alias prep='cd /hdd/Users/awesome/Dropbox/Research/CFD/Preparation '
 alias lung='cd /hdd/Users/awesome/Dropbox/Research/CFD/OldCode/Lung/Lung_2D_linux '
 alias lungs='cd /hdd/Users/awesome/Dropbox/Research/CFD/OldCode/Lung/Lung_2D_linux_s '
 alias business="cd /hdd/Users/awesome/Dropbox/business "
+alias data='cd /mnt/hdd/data '
 alias mk='clear; make '
 alias mp='clear; make DEFS=OMP_FLAG '
 alias mkr='clear; make; clear; ./bin/exec '
@@ -256,7 +256,7 @@ alias vonk='ssh awesome@vonkarman.engin.umich.edu '
 #alias upvonk="rsync -rvza /hdd/Users/awesome/Dropbox/Research/CFD/MyCode/src awesome@vonkarman.engin.umich.edu:/home/awesome/MyCode/src &&
 #rsync -rvza /hdd/Users/awesome/Dropbox/Research/CFD/MyCode/include awesome@vonkarman.engin.umich.edu:/home/awesome/MyCode/include; "
 alias upvonk="rsync -rvza /hdd/Users/awesome/Dropbox/Research/CFD/MyCode/src /hdd/Users/awesome/Dropbox/Research/CFD/MyCode/include awesome@vonkarman.engin.umich.edu:/home/awesome/MyCode/ "
-alias jlab='sshfs awesome@johnsenlab.engin.umich.edu:/ ~/johnsenlab'
+alias jlab='sshfs sshfs awesome@johnsenlab.engin.umich.edu:/homes/awesome/CloudStation /mnt/johnsenlab '
 alias jdata='sshfs awesome@johnsenlab.engin.umich.edu:/labdata/awesome ~/backup'
 alias gg='nohup gitg /hdd/Users/awesome/Dropbox/Research/CFD/MyCode/& clc '
 alias notes='cd /hdd/Users/awesome/Dropbox/MyBooks/Research_Notes '

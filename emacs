@@ -47,37 +47,27 @@
  ;; If there is more than one, they won't work right.
  )
 ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; add line numbers to the left side
 (global-linum-mode t)
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; shortcut to comment regions
 (global-set-key (kbd "C-c C-z") 'comment-region)                                                                                                                                       
 (global-set-key (kbd "C-c M-z") 'uncomment-region) 
 ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; LaTeX stuff
-;; 
-;; ;; Add shortcut to compile .tex file
-;;(global-set-key (kbd "M-p") 'recompile)
-(add-hook 'tex-mode-hook
-	  '(lambda ()
-	     (modify-coding-system-alist 'file "\\.tex\\'" 'utf-8)
-	     (setq compile-command "~/scripts/sh_latex.sh")))
-;;
-(add-hook 'LaTeX-mode-hook
-	  '(lambda ()
-	     (modify-coding-system-alist 'file "\\.tex\\'" 'utf-8)
-	     (setq compile-command "~/scripts/sh_latex.sh"))
-	  'turn-on'auto-fill)
+;; Set hotkeys to navigate buffers easily
+(global-set-key (kbd "M-[") 'previous-buffer)
+(global-set-key (kbd "M-]") 'next-buffer)
 ;;
 ;;
-;; From http://www.emacswiki.org/emacs/HighlightParentheses                                                                                                                       
-;;(setq TeX-PDF-mode t)                                                                                                                                                             
-(setq TeX-auto-save t)                                                                                                                                                            
-(setq TeX-parse-self t)                                                                                                                                                           
-(setq-default TeX-master nil)                                                                                                                                                     
-(add-hook 'LaTeX-mode-hook 'flyspell-mode)                                                                                                                                        
-(add-hook 'LaTeX-mode-hook 'LaTeX-math-mode) 
+;;
+;;===============================================================================
+;; Tell emacs not to follow simlinks, so that dot file colors are preserved
+(setq vc-follow-symlinks nil)
 ;;
 ;;
 ;;================================================================================
@@ -87,7 +77,7 @@
 ;;================================================================================
 (setq compilation-last-buffer nil)
 (setq compilation-scroll-output 'first-error)
-
+;;
 ;; kill the compilation without prompt if recompile taken from
 ;; http://user42.tuxfamily.org/compilation-always-kill/index.html I
 ;; think this might exist in next versions of emacs already. though it
@@ -111,11 +101,11 @@ M-x compile.
     	(if (y-or-n-p (format "Buffer %s modified; Do you want to save? " (buffer-name)))
               (save-buffer)))
 (if (and (eq pfx 1)
-compilation-last-buffer)
+	 compilation-last-buffer)
     (progn
       (set-buffer compilation-last-buffer)
       (revert-buffer t t))
-  (call-interactively 'recompile)))
+  (call-interactively 'compile)))
 
 ;; Set the shortcut command
 (global-set-key (kbd "M-p") 'compile-again) ;; Works great for LaTeX
@@ -131,17 +121,15 @@ close the *compilation* buffer if the compilation is successful,
 and set the focus back to Emacs frame"
   (if (string-match "^finished" msg)
       (progn
-(delete-windows-on buffer)
-(message success-message)
-(when (display-graphic-p)
- (tooltip-show success-message))
-)
+	(delete-windows-on buffer)
+	(message success-message)
+	(when (display-graphic-p)
+	  (tooltip-show success-message))
+	)
     (message fail-message)
     (when (display-graphic-p)
       (tooltip-show fail-message))
-    (setq compilation-last-buffer nil) ;; resets compile buffer so as
-      ;; not to interfere with
-      ;; 'compile-again
+    (setq compilation-last-buffer nil) ;; resets compile buffer so as not to interfere with 'compile-again
     )
   (setq current-frame (car (car (cdr (current-frame-configuration)))))
   (select-frame-set-input-focus current-frame))
@@ -150,7 +138,7 @@ and set the focus back to Emacs frame"
     'notify-compilation-result)
 ;;
 ;;
-;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 (require 'cl) ; If you don't have it already
 ;;
@@ -178,17 +166,14 @@ of FILE in the current directory, suitable for creation"
 ;;	       (setq compile-command "make --directory=./../ DEFS=OMP_FLAG"))))
 ;;
 ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Set mouse scrolling
 ;;(xterm-mouse-mode t)
 ;;
 ;;
 ;;
-;;
-;; Set hotkeys to navigate buffers easily
-(global-set-key (kbd "M-[") 'previous-buffer)
-(global-set-key (kbd "M-]") 'next-buffer)
-;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;Highlight parenthesis
 (show-paren-mode t)
@@ -227,6 +212,7 @@ of FILE in the current directory, suitable for creation"
 (global-set-key (kbd "C-x C-k") 'kill-this-buffer-volatile)
 ;;
 ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;
 ;;================================================================================                                                                        
@@ -249,3 +235,95 @@ of FILE in the current directory, suitable for creation"
 (defun my-minibuffer-setup-hook ()
   (my-keys-minor-mode 0))
 (add-hook 'minibuffer-setup-hook 'my-minibuffer-setup-hook)                                                     
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;;
+;;
+;;===============================================================================
+;; Setup Jedi for python, based on http://tkf.github.io/emacs-jedi/latest/ on 2016-01-19
+(add-hook 'python-mode-hook 'jedi:setup)
+(setq jedi:complete-on-dot t)                 ; optional
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;;
+;;
+;;
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; LaTeX stuff
+;; 
+;;
+;; force all files ending in .tex to be opened in LaTeX mode (not TeX)
+(add-to-list 'auto-mode-alist '("\\.tex$" . LaTeX-mode))
+;;
+;;
+;; ;; Add shortcut to compile .tex file
+;;(global-set-key (kbd "M-p") 'recompile)
+(add-hook 'tex-mode-hook
+	  '(lambda ()
+	     (define-key LaTeX-mode-map "\C-c\C-a"
+	              'compile)
+	     (setq compilation-read-command nil)
+	     (add-hook 'replace-newlines-with-percent-in-region 'replace-newlines-with-percent-in-region nil 'make-it-local)
+	     (local-set-key (kbd "\C-c %") 'replace-newlines-with-percent-in-region)
+	     (setq default-input-method "latin-1-prefix") ;; To toggle: C-\
+	     (modify-coding-system-alist 'file "\\.tex\\'" 'utf-8)
+	     (setq compile-command "/home/awesome/scripts/sh_latex.sh")
+	     (local-set-key (kbd "\C-c k") (lambda ()(interactive) (shell-command "rm report.aux" "*shell-command-out*" "*shell-command-err*") (kill-compilation)))
+	     (local-set-key (kbd "M-F") (lambda () (interactive) (insert "Figure\\,\\ref{fig:}") (backward-char 1)))
+	     (local-set-key (kbd "M-E") (lambda () (interactive) (insert "Equation\\,(\\ref{equ:})") (backward-char 2)))
+	     (local-set-key (kbd "M-T") (lambda () (interactive) (insert "Table\\,\\ref{tab:}") (backward-char 1)))
+	     (local-set-key (kbd "M-H") (lambda () (interactive) (insert "Chapter\\,\\ref{chap:}") (backward-char 1)))
+	     (local-set-key (kbd "M-G") (lambda () (interactive) (insert "Appendix\\,\\ref{app:}") (backward-char 1)))
+	     (local-set-key (kbd "M-L (") (lambda () (interactive) (insert "\\left( \\right)") (backward-char 8)))
+	     (local-set-key (kbd "M-L {") (lambda () (interactive) (insert "\\left\\{ \\right\\}") (backward-char 10)))
+	     (local-set-key (kbd "M-L [") (lambda () (interactive) (insert "\\left[ \\right]") (backward-char 8)))
+	     (local-set-key (kbd "M-L [") (lambda () (interactive) (insert "\\left[ \\right]") (backward-char 8)))))
+;;
+(add-hook 'LaTeX-mode-hook
+	  '(lambda ()
+	     (define-key LaTeX-mode-map "\C-c\C-a"
+	              'compile)
+	     (setq compilation-read-command nil)
+	     (add-hook 'replace-newlines-with-percent-in-region 'replace-newlines-with-percent-in-region nil 'make-it-local)
+	     (local-set-key (kbd "\C-c %") 'replace-newlines-with-percent-in-region)
+	     (setq default-input-method "latin-1-prefix") ;; To toggle: C-\
+
+	     (modify-coding-system-alist 'file "\\.tex\\'" 'utf-8)
+	     (setq compile-command "/home/awesome/scripts/sh_latex.sh")
+	     (local-set-key (kbd "\C-c k") (lambda ()(interactive) (shell-command "rm report.aux" "*shell-command-out*" "*shell-command-err*") (kill-compilation)))
+	     (local-set-key (kbd "M-F") (lambda () (interactive) (insert "Figure\\,\\ref{fig:}") (backward-char 1)))
+	     (local-set-key (kbd "M-E") (lambda () (interactive) (insert "Equation\\,(\\ref{equ:})") (backward-char 2)))
+	     (local-set-key (kbd "M-T") (lambda () (interactive) (insert "Table\\,\\ref{tab:}") (backward-char 1)))
+	     (local-set-key (kbd "M-H") (lambda () (interactive) (insert "Chapter\\,\\ref{chap:}") (backward-char 1)))
+	     (local-set-key (kbd "M-G") (lambda () (interactive) (insert "Appendix\\,\\ref{app:}") (backward-char 1)))
+	     (local-set-key (kbd "M-L (") (lambda () (interactive) (insert "\\left( \\right)") (backward-char 8)))
+	     (local-set-key (kbd "M-L {") (lambda () (interactive) (insert "\\left\\{ \\right\\}") (backward-char 10)))
+	     (local-set-key (kbd "M-L [") (lambda () (interactive) (insert "\\left[ \\right]") (backward-char 8)))
+	     (local-set-key (kbd "M-L [") (lambda () (interactive) (insert "\\left[ \\right]") (backward-char 8))))
+	  'turn-on'auto-fill)
+;;
+;;
+;; From http://www.emacswiki.org/emacs/HighlightParentheses                                                                                                                       
+;;(setq TeX-PDF-mode t)                                                                                                                                                             
+(setq TeX-auto-save t)                                                                                                                                                            
+(setq TeX-parse-self t)                                                                                                                                                           
+(setq-default TeX-master nil)                                                                                                                                                     
+(add-hook 'LaTeX-mode-hook 'flyspell-mode)                                                                                                                                        
+(add-hook 'LaTeX-mode-hook 'LaTeX-math-mode) 
+;;
+;; function to replace all \n with %\n in a region. Useful for latex
+;; when you are in the minipage environment.
+(defun replace-newlines-with-percent-in-region ()
+  "Replace newlines with %\n in region"
+  (interactive)
+  (save-restriction
+    (narrow-to-region (point) (mark))
+    (goto-char (point-min))
+        (while (search-forward "\n" nil t) (replace-match "%\n" nil t))))
+;;
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

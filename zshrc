@@ -82,3 +82,8 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# Use LS directory colors from .mydircolors (fixes ntfs color problem)
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.mydircolors && eval "$(dircolors -b ~/.mydircolors)" || eval "$(dircolors -b)"
+fi
