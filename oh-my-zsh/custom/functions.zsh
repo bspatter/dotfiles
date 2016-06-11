@@ -83,5 +83,5 @@ function mane () {
 }
 
 #rsync to stampede
-function 2stamp() { rsync -rvzau --progress "$1" bspatter@login1.stampede.tacc.utexas.edu:/home1/03773/bspatter/$2; }
+#function 2stamp() { rsync -rvzau --progress "$1" bspatter@login1.stampede.tacc.utexas.edu:/home1/03773/bspatter/$2; }
 
