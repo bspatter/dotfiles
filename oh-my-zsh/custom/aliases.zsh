@@ -28,7 +28,7 @@ alias rs='rsync -rvzau --progress '
 alias acs='apt-cache search '
 alias ut='tar -zxvf '
 alias rename2lowercase='find . -depth -exec rename "s/(.*)\/([^\/]*)/$1\/\L$2/" {} \ ; ' #be carefull, this recursively names all subdirctories and files to lower case.
-
+alias ls='ls --hide="*~" --color=auto'
 
 ## Specifically for lagrange
 #  My terminal aliases for specifically for lagrange
@@ -97,8 +97,10 @@ alias courses='cd /hdd/Users/awesome/Dropbox/Courses '
 alias mcfpl='sudo mount -t davfs https://ctools.umich.edu/dav/b4112ada-8342-4478-9bfc-d73ebd116e99 /mnt/ctools/cfpl/ '
 alias cfpl='cd /mnt/ctools/cfpl/ '
 alias mrelate='sudo mount -t davfs https://ctools.umich.edu/dav/666d7c20-e778-46b2-a0b3-c96cba03f1c0 /mnt/ctools/relate/ '
+alias mrelate2016='sudo mount -t davfs https://ctools.umich.edu/dav/e23274c3-9390-4149-8cfe-c68c1e1f7b54 /mnt/ctools/relate2016/ '
 alias relate='cd /mnt/ctools/relate/ '
 alias class='cd /hdd/Users/awesome/Dropbox/Courses/ '
+alias eic='emacs -nw /home/awesome/code/marcs_code/dg/code/src/ic/init_cond.cc '
 alias mmesr="sudo mount -t cifs -o user=$USER //me-dist.engin.umich.edu/Software /mnt/mesr/ "
 alias mesr="cd /mnt/mesr/ "
 alias xsede="ssh bspatter@login.xsede.org"
