@@ -209,14 +209,19 @@ for playlist_name, songs in pandora_likes.items():
     found = re.search('"/watch\?v=(.*?)"', results)
 
     if(found):
-        print "\n"+songstr
-
-        idlist.append(found.group(1))
         
-        videoid=idlist[-1]
+        try:
+
+            print "\n"+songstr
+
+            idlist.append(found.group(1))
         
-        songvidurl="https://www.youtube.com/watch?v={}".format(videoid)
+            videoid=idlist[-1]
+        
+            songvidurl="https://www.youtube.com/watch?v={}".format(videoid)
 
-        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-            ydl.download([songvidurl])
+            with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+                ydl.download([songvidurl])
 
+        except:
+            continue
