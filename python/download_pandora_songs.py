@@ -183,13 +183,8 @@ ydl_opts = {
 #
 #
 # Get pandora likes list
-# pandora_email = raw_input("Pandora email: ")
-# pandora_password = getpass("Pandora password: ")
-
-
-pandora_email = "calculusmaximus@gmail.com"
-pandora_password = "random46304"
-
+pandora_email = raw_input("Pandora email: ")
+pandora_password = getpass("Pandora password: ")
 
 
 pandora_client = PandoraClient(pandora_email, pandora_password)
