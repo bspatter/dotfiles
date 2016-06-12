@@ -105,6 +105,8 @@ class PandoraClient(object):
             else:
                 more_pages = False
 
+            # Limits total number of liked songs listed to one page For debug purposes
+            # more_pages = False
 
             page += 1
 
@@ -181,8 +183,14 @@ ydl_opts = {
 #
 #
 # Get pandora likes list
-pandora_email = raw_input("Pandora email: ")
-pandora_password = getpass("Pandora password: ")
+# pandora_email = raw_input("Pandora email: ")
+# pandora_password = getpass("Pandora password: ")
+
+
+pandora_email = "calculusmaximus@gmail.com"
+pandora_password = "random46304"
+
+
 
 pandora_client = PandoraClient(pandora_email, pandora_password)
 
@@ -199,31 +207,39 @@ pandora_playlists = defaultdict(list)
 
 # Loop over liked songs, download youtube vid, and convert to .mp3
 idlist = []
-for playlist_name, songs in pandora_likes.items():
-    songstr = unidecode.unidecode(songs[0][0]+" - "+songs[0][-1])
 
-    line = songstr.strip()
-    url = "https://www.youtube.com/results?search_query={}".format(line.replace(' ', '+'))
+print len(pandora_likes.items())
+
+for playlist_name, song_list in pandora_likes.items():
+    for songs in song_list:
+
+        songstr = unidecode.unidecode(songs[0]+" - "+songs[-1])
+
+        print songstr
+
+        line = songstr.strip()
+        url = "https://www.youtube.com/results?search_query={}".format(line.replace(' ', '+'))
+
+        pagedata = urllib2.urlopen(url, timeout=100)
+        results = pagedata.read()
+        found = re.search('"/watch\?v=(.*?)"', results)
 
 
-    pagedata = urllib2.urlopen(url, timeout=100)
-    results = pagedata.read()
-    found = re.search('"/watch\?v=(.*?)"', results)
-
-    if(found):
+        if(found):
         
-        try:
+            try:
 
-            print "\n"+songstr
+                print "\n"+songstr
 
-            idlist.append(found.group(1))
+                idlist.append(found.group(1))
         
-            videoid=idlist[-1]
+                videoid=idlist[-1]
         
-            songvidurl="https://www.youtube.com/watch?v={}".format(videoid)
+                songvidurl="https://www.youtube.com/watch?v={}".format(videoid)
 
-            with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-                ydl.download([songvidurl])
+                with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+                    ydl.download([songvidurl])
 
-        except:
-            continue
+            except:
+                print "something broke"
+                continue
