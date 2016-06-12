@@ -71,7 +71,7 @@ class PandoraClient(object):
                 "thumbStartIndex": thumb_start_index,
             })
 
-#            print_section_heading('Fetching Pandora Likes (page %d)' % page)
+            print_section_heading('Fetching Pandora Likes (page %d)' % page)
 
             tree = html.fromstring(response.text)
 
@@ -94,7 +94,7 @@ class PandoraClient(object):
 
                 tracks[station_name].append((artist, title))
 
-#                print_song(artist, title)
+                print_song(artist, title)
 
             more_elements = tree.find_class("show_more")
 
@@ -171,6 +171,8 @@ ydl_opts = {
 #        'progress_hooks': [my_hook],
         'ignoreerrors': True,    
         "outtmpl": output_directory+"/%(title)s.%(ext)s",
+        "download_archive": "./download_archive.txt", #Skip duplicates listed in this file
+    
     }
 #
 #

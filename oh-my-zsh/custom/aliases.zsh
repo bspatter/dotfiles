@@ -29,6 +29,7 @@ alias acs='apt-cache search '
 alias ut='tar -zxvf '
 alias rename2lowercase='find . -depth -exec rename "s/(.*)\/([^\/]*)/$1\/\L$2/" {} \ ; ' #be carefull, this recursively names all subdirctories and files to lower case.
 alias ls='ls --hide="*~" --color=auto'
+alias count='ls -F |grep -v / | wc -l '
 
 ## Specifically for lagrange
 #  My terminal aliases for specifically for lagrange
