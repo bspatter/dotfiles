@@ -88,23 +88,17 @@ fi
 
 ## Terminal aliases specifically for My laptop
 if [[ $HOSTNAME = *TheWhiteRabbit* ]]; then
-  function winword { "/c/Program Files/Microsoft Office/Office15/WINWORD" $1 >/dev/null 2>&1 &disown; }
-  export -f winword
+  function winword () { "/c/Program Files/Microsoft Office/Office15/WINWORD" $1 >/dev/null 2>&1 &disown; }
 
-  function w2l { rsync -rvza $1 awesome@Lagrange.engin.umich.edu:$2; }
-  export -f w2l
+  function w2l () { rsync -rvza $1 awesome@Lagrange.engin.umich.edu:$2; }
 
-  function h2wonder { scp -P 626 -r $1 brandon@192.168.0.20:/hdd/Users/Brandon/Downloads/; }
-  export -f h2wonder
+  function h2wonder () { scp -P 626 -r $1 brandon@192.168.0.20:/hdd/Users/Brandon/Downloads/; }
 
-  function flvconv { ffmpeg -i $1 -c:v libx264 -c:a aac -strict experimental -b:a 192K $2; }
-  export -f flvconv
+  function flvconv () { ffmpeg -i $1 -c:v libx264 -c:a aac -strict experimental -b:a 192K $2; }
 
-  function w2r { Wip=`awk 'NR==1' /d/Dropbox/scripts/Wonderland_ip.txt`; 
+  function w2r () { Wip=`awk 'NR==1' /d/Dropbox/scripts/Wonderland_ip.txt`; 
   rsync -rvzaP -e 'ssh -p 626' "brandon@$Wip:$1" $2;}
-  export -f w2r
 
-  function gray { convert $1 -colorspace Gray $2; }
-  export -f gray
+  function gray () { convert $1 -colorspace Gray $2; }
  
 fi
