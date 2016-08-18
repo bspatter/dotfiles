@@ -37,51 +37,74 @@ function sf() { $1 $2 $3 $4 $5 $6 $7 $8 $9 >/dev/null 2>&1 & }
 #Specifically for lagrange
 #################  Put functions specifically for Lagrange below this line  ##########################
 
-#copy figure to my notes
-function cpnotes() { cp $1 /hdd/Users/awesome/Dropbox/MyBooks/Research_Notes/figs/$2; }
+if [[ ${(%):-%M} = *Lagrange* ]]; then
 
-# copy to ctools subgroup folder
-function cpcsg() { cp $1 "/mnt/ctools/cfpl/Group meeting research/Cavitation Subgroup/$2"; }
-function cpssg() { sudo cp $1 "/mnt/ctools/cfpl/Group meeting research/Shocks, turbulence and plasmas subgroup/$2"; }
-function cpmsg() { cp $1 "/mnt/ctools/cfpl/Group meeting research/Subgroup: Multiphase Simulations/$2"; }
+   #copy figure to my notes
+   function cpnotes() { cp $1 /hdd/Users/awesome/Dropbox/MyBooks/Research_Notes/figs/$2; }
 
+   # copy to ctools subgroup folder
+   function cpcsg() { cp $1 "/mnt/ctools/cfpl/Group meeting research/Cavitation Subgroup/$2"; }
+   function cpssg() { sudo cp $1 "/mnt/ctools/cfpl/Group meeting research/Shocks, turbulence and plasmas subgroup/$2"; }
+   function cpmsg() { cp $1 "/mnt/ctools/cfpl/Group meeting research/Subgroup: Multiphase Simulations/$2"; }
 
+   # copy to my home computer (wonderland)
+   function w2l() { Wip=`awk 'NR==1' /hdd/Users/awesome/Dropbox/scripts/Wonderland_ip.txt`; rsync -rvza -e 'ssh -p 626' --progress brandon@$Wip:$1 $2;}
 
-# copy to my home computer (wonderland)
-function w2l() { Wip=`awk 'NR==1' /hdd/Users/awesome/Dropbox/scripts/Wonderland_ip.txt`; rsync -rvza -e 'ssh -p 626' --progress brandon@$Wip:$1 $2;}
+   # Temporary function to copy figures to conference figures
+   function cpindy() { cp $1 /hdd/Users/awesome/Dropbox/Research/Papers,etc/conference_presentations/2014_Indianapolis/figs/$2; }
 
-# Temporary function to copy figures to conference figures
-function cpindy() { cp $1 /hdd/Users/awesome/Dropbox/Research/Papers,etc/conference_presentations/2014_Indianapolis/figs/$2; }
+   function cppitts() { cp $1 /hdd/Users/awesome/Dropbox/Research/Papers,etc/conference_presentations/2015_pittsburgh/figs/$2; }
 
-function cppitts() { cp $1 /hdd/Users/awesome/Dropbox/Research/Papers,etc/conference_presentations/2015_pittsburgh/figs/$2; }
+   function cpjacks() { cp $1 /hdd/Users/awesome/Dropbox/Research/Papers,etc/conference_presentations/2015_jacksonville/figs/$2; }
 
-function cpjacks() { cp $1 /hdd/Users/awesome/Dropbox/Research/Papers,etc/conference_presentations/2015_jacksonville/figs/$2; }
+   function cpprelim() { cp "${@:1:$length-1}" /hdd/Users/awesome/Dropbox/Research/Papers,etc/prelim/figs/"${@: -1}"; }
 
-function cpprelim() { cp "${@:1:$length-1}" /hdd/Users/awesome/Dropbox/Research/Papers,etc/prelim/figs/"${@: -1}"; }
+   function avi2mp4() { avconv -i $1 -c:v libx264 -preset veryslow -c:a copy $2; }
 
-function avi2mp4() { avconv -i $1 -c:v libx264 -preset veryslow -c:a copy $2; }
+   function mp42gif() { ffmpeg -ss 00:00:02 -i $1.mp4 -to 26 -r 10 -vf scale=1280:-1 $2; }
 
-function mp42gif() { ffmpeg -ss 00:00:02 -i $1.mp4 -to 26 -r 10 -vf scale=1280:-1 $2; }
+   function conv2gif() { 
+   MYTEMPDIR=$(mktemp -d)
+   ffmpeg -i $1 $MYTEMPDIR/out%04d.gif # Extracts each frame of the video as a single gif
+   convert -delay 4 $MYTEMPDIR/out*.gif $MYTEMPDIR/anim.gif # Combines all the frames into one very nicely animated gif.
+   convert -layers Optimize $MYTEMPDIR/anim.gif $2 # Optimizes the gif using imagemagick
 
-function conv2gif() { 
-	 	      MYTEMPDIR=$(mktemp -d)
-		      ffmpeg -i $1 $MYTEMPDIR/out%04d.gif # Extracts each frame of the video as a single gif
-		      convert -delay 4 $MYTEMPDIR/out*.gif $MYTEMPDIR/anim.gif # Combines all the frames into one very nicely animated gif.
-		      convert -layers Optimize $MYTEMPDIR/anim.gif $2 # Optimizes the gif using imagemagick
-		      
-		      # Cleans up the leftovers
-		      rm -r $MYTEMPDIR
-		    }
+   # Cleans up the leftovers
+   rm -r $MYTEMPDIR
+   }
 
+   # Convert phantom .cine files to mp4
+   function cine2mp4(){ InString=$1; OutString=${InString/.cine/.mp4}; ffmpeg -y -i $1 -c:v libx264 -preset veryslow -c:a copy $OutString; } # Works
 
-# Convert phantom .cine files to mp4
-function cine2mp4(){ InString=$1; OutString=${InString/.cine/.mp4}; ffmpeg -y -i $1 -c:v libx264 -preset veryslow -c:a copy $OutString; } # Works
+   # open man pages in emacs
+   function mane () {
+   emacs -nw --eval "(woman \"$1\")"
+   }	
 
-# open man pages in emacs
-function mane () {
-    emacs -nw --eval "(woman \"$1\")"
-}
+   #rsync to stampede
+   function 2stamp() { rsync -rvzau --progress "$1" bspatter@login1.stampede.tacc.utexas.edu:/home1/03773/bspatter/$2; }
 
-#rsync to stampede
-function 2stamp() { rsync -rvzau --progress "$1" bspatter@login1.stampede.tacc.utexas.edu:/home1/03773/bspatter/$2; }
+fi
 
+## Terminal aliases specifically for My laptop
+if [[ $HOSTNAME = *TheWhiteRabbit* ]]; then
+  function winword { "/c/Program Files/Microsoft Office/Office15/WINWORD" $1 >/dev/null 2>&1 &disown; }
+  export -f winword
+
+  function w2l { rsync -rvza $1 awesome@Lagrange.engin.umich.edu:$2; }
+  export -f w2l
+
+  function h2wonder { scp -P 626 -r $1 brandon@192.168.0.20:/hdd/Users/Brandon/Downloads/; }
+  export -f h2wonder
+
+  function flvconv { ffmpeg -i $1 -c:v libx264 -c:a aac -strict experimental -b:a 192K $2; }
+  export -f flvconv
+
+  function w2r { Wip=`awk 'NR==1' /d/Dropbox/scripts/Wonderland_ip.txt`; 
+  rsync -rvzaP -e 'ssh -p 626' "brandon@$Wip:$1" $2;}
+  export -f w2r
+
+  function gray { convert $1 -colorspace Gray $2; }
+  export -f gray
+ 
+fi
