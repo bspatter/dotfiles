@@ -54,8 +54,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; shortcut to comment regions
-(global-set-key (kbd "C-c C-z") 'comment-region)                                                      
-(global-set-key (kbd "C-c M-z") 'uncomment-region) 
+;;(global-set-key (kbd "C-c C-z") 'comment-region)                                                      
+;;(global-set-key (kbd "C-c M-z") 'uncomment-region) 
+(global-set-key (kbd "C-M-c") 'comment-region)                                                      
+(global-set-key (kbd "C-M-z") 'uncomment-region) 
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -335,3 +337,16 @@ of FILE in the current directory, suitable for creation"
 ;;================================================================================
 (add-to-list 'auto-mode-alist '("\\.geo$" . c++-mode))
 ;;
+;;
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;================================================================================
+;;
+;; Shortcut to revert emacs buffer
+;;
+;;================================================================================
+;;
+(global-set-key [C-M-insert] '(lambda() (interactive) (load-file "~/.emacs")))
+;;
+
+

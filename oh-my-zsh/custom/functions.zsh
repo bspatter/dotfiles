@@ -98,6 +98,9 @@ if [[ $HOSTNAME = *TheWhiteRabbit* ]]; then
 
   function w2r () { Wip=`awk 'NR==1' /d/Dropbox/scripts/Wonderland_ip.txt`; 
   rsync -rvzaP -e 'ssh -p 626' "brandon@$Wip:$1" $2;}
+=======
+#rsync to stampede
+#function 2stamp() { rsync -rvzau --progress "$1" bspatter@login1.stampede.tacc.utexas.edu:/home1/03773/bspatter/$2; }
 
   function gray () { convert $1 -colorspace Gray $2; }
  
