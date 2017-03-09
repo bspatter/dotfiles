@@ -5,7 +5,15 @@ function o() { mimeopen $1 >/dev/null 2>&1 & ;}
 #
 #
 #function jpg2pdf { while [ -n "$1" ]; do convert "$1" "$1".pdf; rename 's/\.jpg(\.pdf)$/$1/' "$1".pdf; shift; done;}
-function jpg2pdf() { while [ -n "$1" ]; do convert "$1" "$1".pdf; rename 's/\.jpg(\.pdf)$/$1/' "$1".pdf; shift; done; rm *.jpg.pdf;}
+function jpg2pdf() { 
+while [ -n "$1" ]; do 
+      convert "$1" -density 300 "$1".pdf;
+      pdfcrop "$1".pdf "$1".pdf;
+      rename 's/\.jpg(\.pdf)$/$1/' "$1".pdf;
+      shift;
+      done;
+rm *.jpg.pdf;
+}
 
 function convh264() { ffmpeg -y -i $1 -an -vcodec libx264 -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -crf 18 $2;}
 
@@ -85,3 +93,15 @@ function mane () {
 #rsync to stampede
 #function 2stamp() { rsync -rvzau --progress "$1" bspatter@login1.stampede.tacc.utexas.edu:/home1/03773/bspatter/$2; }
 
+
+# mount all relate drives
+function mrelate() { 
+	 sudo mount -t davfs https://ctools.umich.edu/dav/666d7c20-e778-46b2-a0b3-c96cba03f1c0 /mnt/ctools/relate/2014/ ; # My personal account
+	 sudo mount -t davfs https://ctools.umich.edu/dav/d7635772-bdec-46e4-bbbe-1b17c20a441d /mnt/ctools/relate/2015/ ;
+	 sudo mount -t davfs https://ctools.umich.edu/dav/e23274c3-9390-4149-8cfe-c68c1e1f7b54 /mnt/ctools/relate/2016/ ;
+	 sudo mount -t davfs https://ctools.umich.edu/dav/group-user/666d7c20-e778-46b2-a0b3-c96cba03f1c0  /mnt/ctools/relate/2014/dropbox/ ;
+	 sudo mount -t davfs https://ctools.umich.edu/dav/group-user/d7635772-bdec-46e4-bbbe-1b17c20a441d  /mnt/ctools/relate/2015/dropbox/ ;
+	 sudo mount -t davfs https://ctools.umich.edu/dav/group-user/e23274c3-9390-4149-8cfe-c68c1e1f7b54  /mnt/ctools/relate/2016/dropbox/ ;
+	 }
+	 
+	  
