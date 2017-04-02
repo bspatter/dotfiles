@@ -115,7 +115,7 @@ if [[ ${(%):-%M} = *Lagrange* ]]; then
    alias blt="bls -ltr "
    alias cic="emacs -nw /home/awesome/code/marcs_code/dg/code/src/ic/init_cond.cc "
    alias eic='emacs -nw /home/awesome/code/marcs_code/dg/code/src/ic/init_cond.cc '
-   alias gdrive="~/gears/gdrive "
+   alias gdrive="~/dotfiles/bin/gdrive "
 
    # alias mrelate='sudo mount -t davfs https://ctools.umich.edu/dav/666d7c20-e778-46b2-a0b3-c96cba03f1c0 /mnt/ctools/relate/ '
    # alias mrelate2016='sudo mount -t davfs https://ctools.umich.edu/dav/e23274c3-9390-4149-8cfe-c68c1e1f7b54 /mnt/ctools/relate2016/ '
