@@ -75,6 +75,7 @@ alias vonk='ssh awesome@vonkarman.engin.umich.edu '
 #rsync -rvza /hdd/Users/awesome/Dropbox/Research/CFD/MyCode/include awesome@vonkarman.engin.umich.edu:/home/awesome/MyCode/include; "
 alias upvonk="rsync -rvza /hdd/Users/awesome/Dropbox/Research/CFD/MyCode/src /hdd/Users/awesome/Dropbox/Research/CFD/MyCode/include awesome@vonkarman.engin.umich.edu:/home/awesome/MyCode/ "
 alias jlab='sshfs awesome@johnsenlab.engin.umich.edu:/ /mnt/johnsenlab'
+alias cdjlab='cd /mnt/johnsenlab/labdata/awesome/data '
 alias jdata='sshfs awesome@johnsenlab.engin.umich.edu:/labdata/awesome ~/backup'
 alias gg='nohup gitg /hdd/Users/awesome/Dropbox/Research/CFD/MyCode/& clc '
 alias notes='cd /hdd/Users/awesome/Dropbox/MyBooks/Research_Notes '
