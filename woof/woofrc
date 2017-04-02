@@ -1,5 +1,0 @@
-[main]
-port = 8080
-count = 1
-ip = lagrange.engin.umich.edu
-compression = Z
