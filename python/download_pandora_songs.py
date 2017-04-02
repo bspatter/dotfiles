@@ -71,7 +71,7 @@ class PandoraClient(object):
                 "thumbStartIndex": thumb_start_index,
             })
 
-#            print_section_heading('Fetching Pandora Likes (page %d)' % page)
+            print_section_heading('Fetching Pandora Likes (page %d)' % page)
 
             tree = html.fromstring(response.text)
 
@@ -94,7 +94,7 @@ class PandoraClient(object):
 
                 tracks[station_name].append((artist, title))
 
-#                print_song(artist, title)
+                print_song(artist, title)
 
             more_elements = tree.find_class("show_more")
 
@@ -105,6 +105,8 @@ class PandoraClient(object):
             else:
                 more_pages = False
 
+            # Limits total number of liked songs listed to one page For debug purposes
+            # more_pages = False
 
             page += 1
 
@@ -171,6 +173,8 @@ ydl_opts = {
 #        'progress_hooks': [my_hook],
         'ignoreerrors': True,    
         "outtmpl": output_directory+"/%(title)s.%(ext)s",
+        "download_archive": "./download_archive.txt", #Skip duplicates listed in this file
+    
     }
 #
 #
@@ -182,12 +186,14 @@ ydl_opts = {
 pandora_email = raw_input("Pandora email: ")
 pandora_password = getpass("Pandora password: ")
 
+
 pandora_client = PandoraClient(pandora_email, pandora_password)
 
 # Get liked Pandora tracks
 print "\nGetting list of liked songs from pandora ...\n\n"
 pandora_likes = pandora_client.liked_tracks()
 pandora_like_count = sum(len(x) for x in pandora_likes.values())
+pandora_like_count_str=str(pandora_like_count)
 
 # Get Pandora stations
 pandora_stations = set(pandora_client.stations())
@@ -196,27 +202,39 @@ pandora_playlists = defaultdict(list)
 
 
 # Loop over liked songs, download youtube vid, and convert to .mp3
+counter = 1;
 idlist = []
-for playlist_name, songs in pandora_likes.items():
-    songstr = unidecode.unidecode(songs[0][0]+" - "+songs[0][-1])
 
-    line = songstr.strip()
-    url = "https://www.youtube.com/results?search_query={}".format(line.replace(' ', '+'))
+for playlist_name, song_list in pandora_likes.items():
+    for songs in song_list:
 
+        songstr = unidecode.unidecode(songs[0]+" - "+songs[-1])
 
-    pagedata = urllib2.urlopen(url, timeout=100)
-    results = pagedata.read()
-    found = re.search('"/watch\?v=(.*?)"', results)
+        line = songstr.strip()
+        url = "https://www.youtube.com/results?search_query={}".format(line.replace(' ', '+'))
 
-    if(found):
-        print "\n"+songstr
+        pagedata = urllib2.urlopen(url, timeout=100)
+        results = pagedata.read()
+        found = re.search('"/watch\?v=(.*?)"', results)
 
-        idlist.append(found.group(1))
+        print "\n"+songstr+" ("+str(counter)+"/"+pandora_like_count_str+")"
+
+        if(found):
         
-        videoid=idlist[-1]
+            try:
+
+                idlist.append(found.group(1))
         
-        songvidurl="https://www.youtube.com/watch?v={}".format(videoid)
+                videoid=idlist[-1]
+        
+                songvidurl="https://www.youtube.com/watch?v={}".format(videoid)
 
-        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-            ydl.download([songvidurl])
+                with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+                    ydl.download([songvidurl])
 
+            except:
+                print "something broke"
+                continue
+        
+
+        counter += 1
