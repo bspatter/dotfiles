@@ -188,7 +188,7 @@ if [[ $HOSTNAME = *TheWhiteRabbit* ]]; then
   alias hotspot='netsh wlan set hostednetwork mode=allow ssid=chupacabra key=tacosauce; netsh wlan start hostednetwork '
   alias wondertmp='ssh -p 626 brandon@68.32.73.26 '
   alias upjax='rsync -rvzau -e "ssh -p 626" brandon@68.32.73.26:/mnt/hdd/data/jax /d/Dropbox/Research/papers,etc/conference_presentations/2015_jacksonville/'
-  alias woof='python ~/scripts/woof.py '
+  #alias woof='python ~/scripts/woof.py '
   alias cdjax='cd /d/Dropbox/Research/papers,etc/conference_presentations/2015_jacksonville '
   alias count='ls -F |grep -v / | wc -l '
   alias upcyg='wget --output-document=setup-x86_64.exe http://cygwin.com/setup-x86_64.exe && mv setup-x86_64.exe ~/cygwin_setup.exe && chmod +x ~/cygwin_setup.exe ; ~/cygwin_setup.exe ' #Update cygwin setup file and run
