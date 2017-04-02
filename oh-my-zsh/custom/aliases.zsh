@@ -30,7 +30,7 @@ alias ut='tar -zxvf '
 alias rename2lowercase='find . -depth -exec rename "s/(.*)\/([^\/]*)/$1\/\L$2/" {} \ ; ' #be carefull, this recursively names all subdirctories and files to lower case.
 alias ls='ls --hide="*~" --color=auto'
 alias down='cd ~/Downloads '
-
+alias woof='python ~/dotfiles/woof/woof.py '
 alias count='ls -F |grep -v / | wc -l '
 alias showbigfiles='du -sh -t 1000000000 * '
 alias rsyncmv='rsync --progress --remove-source-files '
@@ -136,7 +136,7 @@ if [[ $HOSTNAME = *TheWhiteRabbit* ]]; then
   alias drop='cd /d/Dropbox '
   alias down='cd /c/Users/Brandon/Downloads '
   alias downd='cd /d/Downloads '
-  alias brandon='cd /c/Users/Brandon '
+  alias brandon='cd /c/Users/Brandon 'p
   alias paper='cd/d/Dropbox/Research/Papers,etc/papers/2014.jasa '
   alias mk='clear; make '
   alias mkr='clear; make; clear; ./bin/exec '
