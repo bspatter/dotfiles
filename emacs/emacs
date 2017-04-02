@@ -85,7 +85,7 @@
 ;; http://user42.tuxfamily.org/compilation-always-kill/index.html I
 ;; think this might exist in next versions of emacs already. though it
 ;; doesn't seem to exist for v23
-(autoload 'compilation-always-kill-mode "~/scripts/compilation-always-kill" nil t)
+(autoload 'compilation-always-kill-mode "~/dotfiles/emacs/latex/compilation-always-kill" nil t)
 (eval-after-load "compile" '(compilation-always-kill-mode 1))
 
 ;; Compile using the last compile command. Blurb: "M-x recompile just
@@ -348,5 +348,27 @@ of FILE in the current directory, suitable for creation"
 ;;
 (global-set-key [C-M-insert] '(lambda() (interactive) (load-file "~/.emacs")))
 ;;
+(put 'downcase-region 'disabled nil)
 
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;================================================================================
+;;
+;; AucTeX Stuff
+;;
+;;================================================================================
+;; Based on tex.stackexchange.com/questions/311306/auctex-not-compiling-on-c-c-c-c-tex-master-file-ask-master-file-already-set
+(setq TeX-auto-save t)
+(setq TeX-parse-self t)
+(setq-default TeX-master nil)
+(setq TeX-PDF-mode t)
+
+
+;; Turn on RefTeX in AUCTeX
+
+(add-hook 'LaTeX-mode-hook' turn-on-reftex)
+
+;; Activate nice interface between RefTeX and AUCTeX
+
+(setq reftex-plug-into-AUCTeX t)
