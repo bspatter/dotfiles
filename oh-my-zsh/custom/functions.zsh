@@ -31,7 +31,8 @@ function wordsearch() {
 grep -rnwi $1 -e "$2"
 }
 
-
+# Convert to grayspace
+function gray () { convert $1 -colorspace Gray $2; }	
 
 function email() {
 echo $3 | mutt -s "$2" $1 &
@@ -106,15 +107,7 @@ if [[ $HOSTNAME = *TheWhiteRabbit* ]]; then
 
   function w2r () { Wip=`awk 'NR==1' /d/Dropbox/scripts/Wonderland_ip.txt`; 
   rsync -rvzaP -e 'ssh -p 626' "brandon@$Wip:$1" $2;}
-=======
-#rsync to stampede
-#function 2stamp() { rsync -rvzau --progress "$1" bspatter@login1.stampede.tacc.utexas.edu:/home1/03773/bspatter/$2; }
-
-<<<<<<< HEAD
-  function gray () { convert $1 -colorspace Gray $2; }
- 
 fi
-=======
 
 # mount all relate drives
 function mrelate() { 
@@ -127,4 +120,4 @@ function mrelate() {
 	 }
 	 
 	  
->>>>>>> lagrange
+
