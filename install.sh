@@ -7,13 +7,14 @@
 install_dotfiles() {
     stow bash
     stow bin
-    stow woof
     stow emacs
     stow git
     stow python
     stow screen
     stow woof
     stow zsh
+    stow fzf
+    stow mutt
 }
 
 # Remove symlinks of dotfiles using stow
@@ -26,6 +27,8 @@ uninstall_dotfiles() {
     stow -D screen
     stow -D woof
     stow -D zsh
+    stow -D fzf
+    stow -D mutt
 }
 
 #================================================================================
