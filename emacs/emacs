@@ -85,7 +85,7 @@
 ;; http://user42.tuxfamily.org/compilation-always-kill/index.html I
 ;; think this might exist in next versions of emacs already. though it
 ;; doesn't seem to exist for v23
-(autoload 'compilation-always-kill-mode "~/dotfiles/emacs/compilation-always-kill" nil t)
+(autoload 'compilation-always-kill-mode "~/dotfiles/emacs/latex/compilation-always-kill" nil t)
 (eval-after-load "compile" '(compilation-always-kill-mode 1))
 
 ;; Compile using the last compile command. Blurb: "M-x recompile just
