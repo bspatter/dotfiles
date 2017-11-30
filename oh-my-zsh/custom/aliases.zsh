@@ -30,7 +30,7 @@ alias ut='tar -zxvf '
 alias rename2lowercase='find . -depth -exec rename "s/(.*)\/([^\/]*)/$1\/\L$2/" {} \ ; ' #be carefull, this recursively names all subdirctories and files to lower case.
 alias ls='ls --hide="*~" --color=auto'
 alias down='cd ~/Downloads '
-
+alias getip='curl -s checkip.dyndns.org | sed -e "s/.*Current IP Address: //" -e "s/<.*$//"'
 alias count='ls -F |grep -v / | wc -l '
 alias showbigfiles='du -sh -t 1000000000 * '
 alias rsyncmv='rsync --progress --remove-source-files '
@@ -43,6 +43,8 @@ alias removeempty='find . -empty -type d -delete '
 ## Specifically for lagrange
 #  My terminal aliases for specifically for lagrange
 if [[ ${(%):-%M} = *Lagrange* ]]; then
+   alias diss='cd ~/Dropbox/Research/papers,etc/dissertation/ '
+   alias avpaper='cd ~/Dropbox/Research/papers,etc/papers/2016_acoustic_vorticity '
    alias tmp='cd /home/awesome/tmp '
    alias code='cd /hdd/Users/awesome/Dropbox/Research/CFD/MyCode '
    alias setup='cd /hdd/Users/awesome/Dropbox/Research/CFD/MyCode; emacs -nw src/Setup.cpp '
@@ -62,7 +64,7 @@ if [[ ${(%):-%M} = *Lagrange* ]]; then
    alias lungs='cd /hdd/Users/awesome/Dropbox/Research/CFD/OldCode/Lung/Lung_2D_linux_s '
    alias business="cd /hdd/Users/awesome/Dropbox/business "
    alias data="cd /mnt/hdd/data "
-   alias group='cd /hdd/Users/awesome/Dropbox/Research/Papers,etc/group_meetings '
+   alias group='cd /hdd/Users/awesome/Dropbox/Research/papers,etc/group_meetings '
    alias dg='cd /home/awesome/code/marcs_code/dg/ '
    alias mk='clear; make '
    alias mp='clear; make DEFS=OMP_FLAG '
@@ -78,6 +80,7 @@ if [[ ${(%):-%M} = *Lagrange* ]]; then
    alias vonk='ssh awesome@vonkarman.engin.umich.edu '
    alias upvonk="rsync -rvza /hdd/Users/awesome/Dropbox/Research/CFD/MyCode/src /hdd/Users/awesome/Dropbox/Research/CFD/MyCode/include awesome@vonkarman.engin.umich.edu:/home/awesome/MyCode/ "
    alias jlab='sshfs awesome@johnsenlab.engin.umich.edu:/ /mnt/johnsenlab'
+   alias jlab2='sshfs awesome@johnsenlab2.engin.umich.edu:/ /mnt/johnsenlab2'
    alias jdata='sshfs awesome@johnsenlab.engin.umich.edu:/labdata/awesome ~/backup'
    alias gg='nohup gitg /hdd/Users/awesome/Dropbox/Research/CFD/MyCode/& clc '
    alias notes='cd /hdd/Users/awesome/Dropbox/MyBooks/Research_Notes '
@@ -93,7 +96,7 @@ if [[ ${(%):-%M} = *Lagrange* ]]; then
    alias bern='ssh awesome@bernoulli.engin.umich.edu '
    alias wbern='nohup rdesktop -g 1680x995 -a 32 -r clipboard:CLIPBOARD -u UMROOT\\awesome -r disk:Dropbox=/hdd/Users/awesome/Dropbox me-bernoulli.adsroot.itcs.umich.edu& '
    alias wbern2='nohup rdesktop -g 3360x995 -a 32 -r clipboard:CLIPBOARD -u UMROOT\\awesome -r disk:Dropbox=/hdd/Users/awesome/Dropbox me-bernoulli.adsroot.itcs.umich.edu& '
-   alias backup='sudo rsync -rvzua --progress /home/awesome/code/marcs_code/dg /mnt/johnsenlab/ && sudo rsync -rvzua --progress /mnt/hdd/data /mnt/johnsenlab/	'			   
+   alias backup='sudo rsync -rvzua --progress /home/awesome/code /mnt/johnsenlab/ && sudo rsync -rvzua --progress /mnt/hdd/data /mnt/johnsenlab/	'			   
    alias indy='cd /hdd/Users/awesome/Dropbox/Research/Papers,etc/conference_presentations/2014_Indianapolis '
    alias pitts='cd /hdd/Users/awesome/Dropbox/Research/Papers,etc/conference_presentations/2015_pittsburgh '
    alias courses='cd /hdd/Users/awesome/Dropbox/Courses '
@@ -110,15 +113,16 @@ if [[ ${(%):-%M} = *Lagrange* ]]; then
    alias xsede="ssh bspatter@login.xsede.org"
    alias stampede="ssh bspatter@login1.stampede.tacc.utexas.edu"
    alias kampede="ssh bspatter@knl-login1.stampede.tacc.utexas.edu"
-   alias gmsh="/home/awesome/programs/gmsh-2.12.0/bin/gmsh"
+   #alias gmsh="/home/awesome/programs/gmsh-2.12.0/bin/gmsh"
+   alias gmsh="/home/awesome/programs/gmsh-3.0.5/bin/gmsh"
    alias navier="ssh awesome@navier.engin.umich.edu"
    alias blt="bls -ltr "
    alias cic="emacs -nw /home/awesome/code/marcs_code/dg/code/src/ic/init_cond.cc "
    alias eic='emacs -nw /home/awesome/code/marcs_code/dg/code/src/ic/init_cond.cc '
    alias gdrive="~/gears/gdrive "
-
+   alias upasfigs="rsync -rvzau --progress awesome@leviathan.engin.umich.edu:~/Dropbox/Research/Papers,etc/papers/2017.ieee.astats/figs/. ~/Dropbox/Research/papers,etc/papers/2017.ieee.astats/figs/ "
    # alias mrelate='sudo mount -t davfs https://ctools.umich.edu/dav/666d7c20-e778-46b2-a0b3-c96cba03f1c0 /mnt/ctools/relate/ '
-   # alias mrelate2016='sudo mount -t davfs https://ctools.umich.edu/dav/e23274c3-9390-4149-8cfe-c68c1e1f7b54 /mnt/ctools/relate2016/ '
+   alias mrelate2016='sudo mount -t davfs https://ctools.umich.edu/dav/e23274c3-9390-4149-8cfe-c68c1e1f7b54 /mnt/ctools/relate2016/ '
    # alias mrelate2016_dropbox='sudo mount -t davfs https://ctools.umich.edu/dav/group-user/e23274c3-9390-4149-8cfe-c68c1e1f7b54  /mnt/ctools/relate2016_dropbox/ '
    # alias mrelate2015_dropbox='sudo mount -t davfs https://ctools.umich.edu/dav/group-user/d7635772-bdec-46e4-bbbe-1b17c20a441d  /mnt/ctools/relate2015_dropbox/ '
    # alias mrelate2014_dropbox='sudo mount -t davfs https://ctools.umich.edu/dav/group-user/666d7c20-e778-46b2-a0b3-c96cba03f1c0  /mnt/ctools/relate2014_dropbox/ '

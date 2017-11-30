@@ -121,3 +121,5 @@ function mrelate() {
 	 
 	  
 
+# shrinkpdf
+function shrinkpdf() { pdf2ps $1 "$1".ps && ps2pdf "$1".ps $2 && rm "$1".ps }
