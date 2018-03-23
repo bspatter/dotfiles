@@ -16,6 +16,10 @@
 ;;
 ;;
 ;;
+;; Fix undo mode
+(require 'undo-tree)
+(global-undo-tree-mode)
+;;
 ;;
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -388,59 +392,59 @@ of FILE in the current directory, suitable for creation"
 
   (projectile-global-mode))
 
-(use-package helm
-  :ensure t
-  :diminish helm-mode
-  :bind
-  ("M-x"     . helm-M-x)
-  ("C-x C-f" . helm-find-files)
-  ("C-x r l" . helm-bookmarks)
-  ("C-h i"   . helm-google-suggest)
-  ("M-y"     . helm-show-kill-ring)
-  ("C-h a"   . helm-apropos)
-  ("C-x p"   . helm-top)
-  ("C-x C-b" . helm-buffers-list)
-  ("C-x b"   . helm-mini)
-  :init
-  (use-package helm-projectile
-    :ensure    helm-projectile
-    :bind
-    ("C-c h" . helm-projectile)
-    ("C-c x" . helm-projectile-find-file-dwim)
-    :config
-    (setq shell-file-name "/bin/bash"))
+;; (use-package helm
+;;   :ensure t
+;;   :diminish helm-mode
+;;   :bind
+;;   ("M-x"     . helm-M-x)
+;;   ("C-x C-f" . helm-find-files)
+;;   ("C-x r l" . helm-bookmarks)
+;;   ("C-h i"   . helm-google-suggest)
+;;   ("M-y"     . helm-show-kill-ring)
+;;   ("C-h a"   . helm-apropos)
+;;   ("C-x p"   . helm-top)
+;;   ("C-x C-b" . helm-buffers-list)
+;;   ("C-x b"   . helm-mini)
+;;   :init
+;;   (use-package helm-projectile
+;;     :ensure    helm-projectile
+;;     :bind
+;;     ("C-c h" . helm-projectile)
+;;     ("C-c x" . helm-projectile-find-file-dwim)
+;;     :config
+;;     (setq shell-file-name "/bin/bash"))
 
-  (use-package helm-swoop
-    :ensure    helm-swoop
-    :bind
-    ("M-i" . helm-swoop)
-    ("C-c M-i" . helm-multi-swoop)
-    ("C-x M-i" . helm-multi-swoop-all)
-    :config
-    (setq helm-swoop-split-direction 'split-window-horizontally)
-    (define-key isearch-mode-map (kbd "M-i") 'helm-swoop-from-isearch)
-    (define-key helm-swoop-map (kbd "C-r") 'helm-previous-line)
-    (define-key helm-swoop-map (kbd "C-s") 'helm-next-line))
+;;   (use-package helm-swoop
+;;     :ensure    helm-swoop
+;;     :bind
+;;     ("M-i" . helm-swoop)
+;;     ("C-c M-i" . helm-multi-swoop)
+;;     ("C-x M-i" . helm-multi-swoop-all)
+;;     :config
+;;     (setq helm-swoop-split-direction 'split-window-horizontally)
+;;     (define-key isearch-mode-map (kbd "M-i") 'helm-swoop-from-isearch)
+;;     (define-key helm-swoop-map (kbd "C-r") 'helm-previous-line)
+;;     (define-key helm-swoop-map (kbd "C-s") 'helm-next-line))
 
-  (use-package helm-git-grep
-    :ensure    helm-git-grep
-    :bind
-    ("C-c g" . helm-git-grep)
-    :config
-    (define-key isearch-mode-map (kbd "C-c g") 'helm-git-grep-from-isearch)
-    (define-key helm-map (kbd "C-c g") 'helm-git-grep-from-helm)
-    (define-key helm-git-grep-map (kbd "C-r") 'helm-previous-line)
-    (define-key helm-git-grep-map (kbd "C-s") 'helm-next-line))
+;;   (use-package helm-git-grep
+;;     :ensure    helm-git-grep
+;;     :bind
+;;     ("C-c g" . helm-git-grep)
+;;     :config
+;;     (define-key isearch-mode-map (kbd "C-c g") 'helm-git-grep-from-isearch)
+;;     (define-key helm-map (kbd "C-c g") 'helm-git-grep-from-helm)
+;;     (define-key helm-git-grep-map (kbd "C-r") 'helm-previous-line)
+;;     (define-key helm-git-grep-map (kbd "C-s") 'helm-next-line))
 
-  (use-package helm-gtags
-    :ensure    helm-gtags
-    :bind
-    ("C-c f" . helm-gtags-dwim)
-    :config
-    (add-hook 'c-mode-hook 'helm-gtags-mode)
-    (add-hook 'c++-mode-hook 'helm-gtags-mode))
+;;   (use-package helm-gtags
+;;     :ensure    helm-gtags
+;;     :bind
+;;     ("C-c f" . helm-gtags-dwim)
+;;     :config
+;;     (add-hook 'c-mode-hook 'helm-gtags-mode)
+;;     (add-hook 'c++-mode-hook 'helm-gtags-mode))
 
-  (helm-mode t))
+;;   (helm-mode t))
 
 ;;
 ;;
